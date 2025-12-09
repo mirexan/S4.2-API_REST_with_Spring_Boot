@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,10 +55,16 @@ public class FruitControllerTest {
 	}
 
 	@Test
-	void listFruits_ShouldReturnOK_WhenDataIsValid() throws Exception {
+	void getAllFruits_ShouldReturnOK_WhenListIsNotEmpty() throws Exception {
+		Mockito.when(fruitService.getAllFruits()).thenReturn(List.of(fruitDTO));
 		mockMvc.perform(get("/fruits"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].name").value("Melon"));
+	}
+	@Test
+	void getAllFruits_ShouldReturnOK_WhenListIsEmpty() throws Exception {
+		mockMvc.perform(get("/fruits"))
+				.andExpect(status().isOk());
 	}
 
 	@Test

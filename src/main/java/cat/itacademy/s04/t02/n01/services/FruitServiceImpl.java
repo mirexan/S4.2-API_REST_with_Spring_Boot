@@ -37,7 +37,10 @@ public FruitServiceImpl(FruitRepository fruitRepository){
 	return fruitToFruitDTO(foundFruit);
 	}
 	public List<FruitDTO> getAllFruits() {
-	return null;
+	return fruitRepository.findAll()
+			.stream()
+			.map(fruit -> fruitToFruitDTO(fruit))
+			.toList();
 	}
 	public FruitDTO updateFruitById(long id, FruitDTO newFruitDTO) {
 	return null;
