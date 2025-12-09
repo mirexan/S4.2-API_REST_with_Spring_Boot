@@ -91,7 +91,7 @@ public class FruitControllerTest {
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(newWeigthFruitDTO)))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.weight").value(5));
+				.andExpect(jsonPath("$.weightInKilos").value(5));
 	}
 
 	@Test

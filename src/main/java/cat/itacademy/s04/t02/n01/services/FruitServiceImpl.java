@@ -43,7 +43,12 @@ public FruitServiceImpl(FruitRepository fruitRepository){
 			.toList();
 	}
 	public FruitDTO updateFruitById(long id, FruitDTO newFruitDTO) {
-	return null;
+		Fruit foundFruit = fruitRepository.findById(id)
+				.orElseThrow(()-> new FruitNotFoundException("Fruit not found with id : " + id));
+		foundFruit.setName(newFruitDTO.name());
+		foundFruit.setWeightInKilos(newFruitDTO.weightInKilos());
+		Fruit changedFruit = fruitRepository.save(foundFruit);
+		return fruitToFruitDTO(changedFruit);
 	}
 	public void deleteFruitById(long id){
 	}
