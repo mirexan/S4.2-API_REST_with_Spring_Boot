@@ -3,6 +3,7 @@ package cat.itacademy.s04.t02.n01.controllers;
 import cat.itacademy.s04.t02.n01.model.FruitDTO;
 import cat.itacademy.s04.t02.n01.services.FruitService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,10 @@ public class FruitController {
 	@PutMapping("/{id}")
 	public ResponseEntity<FruitDTO> updateFruit(@PathVariable long id, @Valid @RequestBody FruitDTO newFruitDTO){
 		return ResponseEntity.status(HttpStatus.OK).body(fruitService.updateFruitById(id, newFruitDTO));
+	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<FruitDTO> deleteFruitById(@PathVariable long id){
+		fruitService.deleteFruitById(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 }

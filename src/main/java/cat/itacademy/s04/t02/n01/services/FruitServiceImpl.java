@@ -51,5 +51,8 @@ public FruitServiceImpl(FruitRepository fruitRepository){
 		return fruitToFruitDTO(changedFruit);
 	}
 	public void deleteFruitById(long id){
+		Fruit foundFruit = fruitRepository.findById(id)
+				.orElseThrow(()-> new FruitNotFoundException("Fruit not found with id : " + id));
+	fruitRepository.deleteById(id);
 	}
 }

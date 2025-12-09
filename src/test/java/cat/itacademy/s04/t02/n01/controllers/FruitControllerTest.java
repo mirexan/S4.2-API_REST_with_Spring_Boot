@@ -108,8 +108,8 @@ public class FruitControllerTest {
 	void updateExistingFruit_ShouldReturnNotFound_WhenDataDoesNotExist() throws Exception {
 		FruitDTO newWeigthFruitDTO = new FruitDTO(fruitDTO.id(), fruitDTO.name(), 5);
 		Mockito.when(fruitService.updateFruitById(Mockito.eq(1L), Mockito.any(FruitDTO.class)))
-				.thenReturn(newWeigthFruitDTO);
-		mockMvc.perform(put("/fruits/{id}", 2L)
+				.thenThrow(new FruitNotFoundException("Does not exist"));
+		mockMvc.perform(put("/fruits/{id}", 1L)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(newWeigthFruitDTO)))
 				.andExpect(status().isNotFound());
@@ -122,8 +122,9 @@ public class FruitControllerTest {
 	}
 	@Test
 	void deleteFruitById_ShouldReturnNotFound_WhenIdDoesNotExists() throws Exception {
-		Mockito.doNothing().when(fruitService).deleteFruitById(2L);
-		mockMvc.perform(delete("/fruits/{id}", 3L))
+		Mockito.doThrow(new FruitNotFoundException("Does not exist"))
+						.when(fruitService).deleteFruitById(2L);
+		mockMvc.perform(delete("/fruits/{id}", 2L))
 				.andExpect(status().isNotFound());
 	}
 }
