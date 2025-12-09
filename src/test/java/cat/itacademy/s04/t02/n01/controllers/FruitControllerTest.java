@@ -34,10 +34,13 @@ public class FruitControllerTest {
 	@Test
 	void newFruitRegister_ShouldReturnOK_WhenDataIsValid() throws Exception {
 		FruitDTO newFruitDTO = new FruitDTO(null, "Apple", 2);
+		Mockito.when(fruitService.addFruit(Mockito.any(FruitDTO.class)))
+				.thenReturn(new FruitDTO(1L, "Apple", 2));
 		mockMvc.perform(post("/fruits")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(newFruitDTO)))
-				.andExpect(status().isCreated());
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.name").value("Apple"));
 	}
 
 	@Test

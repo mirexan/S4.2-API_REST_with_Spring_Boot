@@ -14,7 +14,8 @@ public class Fruit{
 		String name;
 		int weightInKilos;
 
-	public Fruit(String name, int weightInKilos) {
+	public Fruit(Long id,String name, int weightInKilos) {
+		this.id = id;
 		this.name = name;
 		this.weightInKilos = weightInKilos;
 	}
